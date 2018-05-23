@@ -1,0 +1,81 @@
+task shortHello << {
+  println 'Hello world! Alias of doLast by using <<'
+}
+
+// Task Dependencies when for yet to be created tasks.
+task intro(dependsOn: 'hello') {
+  doLast {
+    String name = 'Ashish Krishnan'
+    println name.toUpperCase()
+    print 'is an Android Developer@Kite'
+  }
+}
+
+task hello {
+  doLast {
+    println 'Hello World'
+  }
+}
+
+// Dynamic Tasks
+4.times { counter ->
+  task "task$counter" {
+    doLast {
+      println "I'm task number $counter"
+    }
+  }
+}
+
+// Gradle tasks API:
+// Dynamic Tasks with dynamic dependencies
+task0.dependsOn task2, task3
+
+// Accessing task to add an behaviour.
+hello.doFirst {
+  println 'Hello Venus'
+}
+
+hello.doLast {
+  println 'Hello Mars'
+}
+
+// Overriding the tasks
+hello {
+  doLast {
+    println 'Hello Jupiter'
+  }
+}
+
+// Accessing task as a property
+task meow {
+  doLast {
+    println 'I am a cat'
+  }
+}
+
+meow.doLast {
+  println "I $meow.name" // Accessing a property should be done using double-quotes.
+}
+
+// Adding Extra properties
+task bow {
+  ext.species = "dog"
+  doLast {
+    println "I am a $ext.species and I bark."
+  }
+}
+
+// Default Tasks:
+defaultTasks 'clean', 'run'
+
+task clean {
+  doLast {
+    println 'Clean files'
+  }
+}
+
+task run {
+  doLast {
+    println 'It\'s running baby!!!'
+  }
+}
